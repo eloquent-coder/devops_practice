@@ -62,5 +62,21 @@
     "category": "TRANSFER",
     "transaction_date": "2025-08-06T00:00:00Z",
     "status": "completed"
+  },
+  {
+    "id": "txn-187525138707",
+    "account_id": "acc-550e8400-e29b-41d4-a716-446655440003",
+    "amount": 1940.85,
+    "category": "SHOPPING",
+    "transaction_date": "2025-06-02T00:00:00Z",
+    "status": "completed"
+  },
+  {
+    "id": "txn-498837994177",
+    "account_id": "acc-550e8400-e29b-41d4-a716-446655440003",
+    "amount": 1160.74,
+    "category": "FUEL",
+    "transaction_date": "2025-08-13T00:00:00Z",
+    "status": "completed"
   }
 ]
