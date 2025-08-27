@@ -1,0 +1,38 @@
+[
+  {
+    "id": "acc-550e8400-e29b-41d4-a716-446655440001",
+    "user_id": "550e8400-e29b-41d4-a716-446655440001",
+    "account_type": "CURRENT",
+    "account_number": "1001234567",
+    "balance": 2500.75,
+    "currency": "USD",
+    "created_at": "2024-01-16T09:15:00Z",
+    "status": "active",
+    "branch_code": "BR001"
+  },
+  {
+    "id": "acc-550e8400-e29b-41d4-a716-446655440002",
+    "user_id": "550e8400-e29b-41d4-a716-446655440001",
+    "account_type": "SAVINGS",
+    "account_number": "2001234567",
+    "balance": 15000.00,
+    "currency": "USD",
+    "created_at": "2024-01-16T09:30:00Z",
+    "status": "active",
+    "branch_code": "BR001",
+    "interest_rate": 0.025
+  },
+  {
+    "id": "acc-550e8400-e29b-41d4-a716-446655440003",
+    "user_id": "550e8400-e29b-41d4-a716-446655440002",
+    "account_type": "LOAN",
+    "account_number": "3001234567",
+    "balance": -25000.00,
+    "currency": "USD",
+    "created_at": "2024-01-21T11:00:00Z",
+    "status": "active",
+    "branch_code": "BR002",
+    "loan_term_months": 60,
+    "interest_rate": 0.045
+  }
+]

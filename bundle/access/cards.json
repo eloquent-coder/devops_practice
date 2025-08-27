@@ -1,0 +1,42 @@
+[
+  {
+    "id": "card-550e8400-e29b-41d4-a716-446655440001",
+    "user_id": "550e8400-e29b-41d4-a716-446655440001",
+    "account_id": "acc-550e8400-e29b-41d4-a716-446655440001",
+    "card_type": "DEBIT",
+    "card_number": "4532123456789012",
+    "card_holder_name": "Usman Ashraf",
+    "expiry_date": "2027-12-31",
+    "status": "active",
+    "issued_at": "2024-01-16T10:00:00Z",
+    "daily_limit": 1000.00,
+    "monthly_limit": 5000.00
+  },
+  {
+    "id": "card-550e8400-e29b-41d4-a716-446655440002",
+    "user_id": "550e8400-e29b-41d4-a716-446655440002",
+    "account_id": "acc-550e8400-e29b-41d4-a716-446655440003",
+    "card_type": "DEBIT",
+    "card_number": "4532123456789034",
+    "card_holder_name": "Muhammad Ali",
+    "expiry_date": "2027-06-30",
+    "status": "active",
+    "issued_at": "2024-01-21T12:00:00Z",
+    "daily_limit": 800.00,
+    "monthly_limit": 3000.00
+  },
+  {
+    "id": "card-550e8400-e29b-41d4-a716-446655440003",
+    "user_id": "550e8400-e29b-41d4-a716-446655440001",
+    "account_id": "acc-550e8400-e29b-41d4-a716-446655440002",
+    "card_type": "CREDIT",
+    "card_number": "5432109876543210",
+    "card_holder_name": "Usman Ashraf",
+    "expiry_date": "2028-03-31",
+    "status": "active",
+    "issued_at": "2024-01-17T14:30:00Z",
+    "credit_limit": 10000.00,
+    "available_credit": 8500.00,
+    "interest_rate": 0.189
+  }
+]

@@ -1,0 +1,57 @@
+name: Build and Push Banking Data Seeder
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  REGISTRY: myregistry.azurecr.io
+  IMAGE_NAME: banking-data-seeder
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write   # Required for OIDC token
+      contents: read    # Required to checkout code
+    
+    steps:
+    # 1. Checkout code
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    # 2. Login to Azure with OIDC (no long-lived secrets)
+    - name: Azure Login with OIDC
+      uses: azure/login@v1
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+    
+    # 3. Login to Azure Container Registry
+    - name: Login to ACR
+      run: az acr login --name myregistry
+    
+    # 4. Build container image
+    - name: Build Docker image
+      run: |
+        docker build -f docker-assets/Dockerfile -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }} .
+        docker tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }} ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+    
+    # 5. Push to ACR (commented for dry-run demo)
+    - name: Push to ACR
+      run: |
+        # docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+        # docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+        echo "Would push: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}"
+        echo "Would push: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest"
+    
+    # 6. Upload bundle as artifact
+    - name: Upload data bundle artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: banking-data-bundle
+        path: bundle/
+        retention-days: 30

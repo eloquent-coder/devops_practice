@@ -1,0 +1,25 @@
+services:
+  # Banking Data Seeder - Production Mode
+  banking-data-seeder:
+    build:
+      context: ..
+      dockerfile: docker-assets/Dockerfile
+    image: banking-data-seeder:latest
+    container_name: banking-seeder
+    user: "${UID:-1000}:${GID:-1000}"  # Run as current user to avoid permission issues
+    environment:
+      # Production configuration - modify as needed
+      - TXN_COUNT=${TXN_COUNT:-10}
+      - DRY_RUN=${DRY_RUN:-false}
+      - TXN_WINDOW_DAYS=${TXN_WINDOW_DAYS:-60}
+      - PYTHONUNBUFFERED=1
+    volumes:
+      # Mount bundle directory for data output
+      - ../bundle:/app/bundle
+    restart: "no"  # One-time job execution
+    networks:
+      - banking_network
+
+networks:
+  banking_network:
+    driver: bridge

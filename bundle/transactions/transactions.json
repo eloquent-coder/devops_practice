@@ -1,0 +1,66 @@
+[
+  {
+    "id": "txn-911856239313",
+    "account_id": "acc-550e8400-e29b-41d4-a716-446655440002",
+    "amount": 1206.74,
+    "category": "FUEL",
+    "transaction_date": "2025-07-24T00:00:00Z",
+    "status": "completed"
+  },
+  {
+    "id": "txn-843469555623",
+    "account_id": "acc-550e8400-e29b-41d4-a716-446655440003",
+    "amount": 106.98,
+    "category": "TRANSFER",
+    "transaction_date": "2025-08-10T00:00:00Z",
+    "status": "completed"
+  },
+  {
+    "id": "txn-130201276659",
+    "account_id": "acc-550e8400-e29b-41d4-a716-446655440001",
+    "amount": 1099.08,
+    "category": "FUEL",
+    "transaction_date": "2025-07-23T00:00:00Z",
+    "status": "completed"
+  },
+  {
+    "id": "txn-714294294451",
+    "account_id": "acc-550e8400-e29b-41d4-a716-446655440001",
+    "amount": 911.78,
+    "category": "SALARY",
+    "transaction_date": "2025-06-13T00:00:00Z",
+    "status": "completed"
+  },
+  {
+    "id": "txn-746174432554",
+    "account_id": "acc-550e8400-e29b-41d4-a716-446655440002",
+    "amount": 722.94,
+    "category": "GROCERIES",
+    "transaction_date": "2025-08-01T00:00:00Z",
+    "status": "completed"
+  },
+  {
+    "id": "txn-406404042870",
+    "account_id": "acc-550e8400-e29b-41d4-a716-446655440001",
+    "amount": 1335.91,
+    "category": "FUEL",
+    "transaction_date": "2025-07-09T00:00:00Z",
+    "status": "completed"
+  },
+  {
+    "id": "txn-204710990461",
+    "account_id": "acc-550e8400-e29b-41d4-a716-446655440002",
+    "amount": 24.86,
+    "category": "SHOPPING",
+    "transaction_date": "2025-06-05T00:00:00Z",
+    "status": "completed"
+  },
+  {
+    "id": "txn-899050535267",
+    "account_id": "acc-550e8400-e29b-41d4-a716-446655440002",
+    "amount": 381.95,
+    "category": "TRANSFER",
+    "transaction_date": "2025-08-06T00:00:00Z",
+    "status": "completed"
+  }
+]

@@ -1,0 +1,138 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: banking-data-seeder
+  namespace: banking-demo  # Isolated namespace for safety
+  labels:
+    app: banking-data-seeder
+    component: data-initialization
+    version: v1.0.0
+spec:
+  # Job Execution Policy
+  backoffLimit: 3  # Retry up to 3 times on failure
+  ttlSecondsAfterFinished: 86400  # Clean up after 24 hours
+  
+  template:
+    metadata:
+      labels:
+        app: banking-data-seeder
+        job-name: banking-data-seeder
+    spec:
+      # CRITICAL: Never restart - fail fast on issues
+      restartPolicy: Never
+      
+      # Service Account for Azure Workload Identity
+      serviceAccountName: banking-seeder-sa
+      
+      containers:
+      - name: data-seeder
+        # IMAGE PLACEHOLDER - Replace with your ACR registry
+        image: myregistry.azurecr.io/banking-data-seeder:latest
+        
+        # Environment Configuration
+        env:
+        - name: DRY_RUN
+          value: "true"  # Safe default - change to "false" for real seeding
+        - name: TXN_COUNT
+          value: "15"
+        - name: TXN_WINDOW_DAYS
+          value: "60"
+        - name: BANKING_API_URL
+          value: "https://banking-api.internal"
+        - name: PYTHONUNBUFFERED
+          value: "1"
+        
+        # Resource Limits (sensible for banking data seeding)
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        
+        # Volume Mounts (where secrets/config would mount)
+        volumeMounts:
+        - name: data-output
+          mountPath: /app/bundle
+        - name: banking-secrets
+          mountPath: /app/secrets
+          readOnly: true
+        - name: seeder-config
+          mountPath: /app/config
+          readOnly: true
+      
+      # Volumes Configuration
+      volumes:
+      # Persistent storage for generated data
+      - name: data-output
+        persistentVolumeClaim:
+          claimName: banking-data-pvc
+      
+      # Azure Key Vault CSI Secret Store (real environment)
+      - name: banking-secrets
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: "banking-secrets-spc"
+      
+      # ConfigMap for non-sensitive configuration
+      - name: seeder-config
+        configMap:
+          name: banking-seeder-config
+          items:
+          - key: seeder.yaml
+            path: seeder.yaml
+
+---
+# Supporting Resources for Production Use
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: banking-seeder-sa
+  namespace: banking-demo
+  annotations:
+    # Azure Workload Identity annotation (no long-lived secrets)
+    azure.workload.identity/client-id: "CLIENT_ID_PLACEHOLDER"
+  labels:
+    azure.workload.identity/use: "true"
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: banking-seeder-config
+  namespace: banking-demo
+data:
+  seeder.yaml: |
+    # Data seeding configuration
+    validation:
+      strict_mode: true
+      fail_fast: true
+    
+    api_endpoints:
+      base_url: "https://banking-api.internal"
+      timeout: 30
+      retries: 3
+    
+    data_model:
+      # Reference to the 3-way split mentioned in assignment
+      org_entities: "/app/bundle/org/"
+      access_products: "/app/bundle/products/"
+      transaction_facts: "/app/bundle/transactions/"
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: banking-data-pvc
+  namespace: banking-demo
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: managed-premium  # Azure Premium SSD
